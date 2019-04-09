@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "emoji database",
   "bin": {
-    "emojidb": "emojidb"
+    "emojidb": "bin/emojidb"
   },
   "repository": {
     "type": "git",
