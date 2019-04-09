@@ -2,11 +2,16 @@
 
 const shell = require("shelljs");
 const argv = require('yargs')
-  .alias('n', 'name')
   .help('h')
-  .alias('h', 'help')
   .alias('v', 'version')
-  .usage('Usage: emojidb build type')
+  .alias('h', 'help')
+  .alias('f', 'file')
+  .describe('f', 'File name')
+  .alias('t', 'type')
+  .describe('t', 'Choice output format')
+  .choices('t', ['json', 'xml'])
+  .usage('Usage: emojidb -t type -f file')
+  .epilog('copyright (C) 2019 phpz.xyz')
   .argv;
 
 console.log(argv.name)
