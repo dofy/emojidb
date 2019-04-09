@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+const shell = require("shelljs");
+const argv = require('yargs')
+  .alias('n', 'name')
+  .help('h')
+  .alias('h', 'help')
+  .alias('v', 'version')
+  .usage('Usage: emojidb build type')
+  .argv;
+
+console.log(argv.name)
+
+console.log(argv);
