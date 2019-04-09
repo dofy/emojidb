@@ -1,11 +1,11 @@
 [
   {
-    "group": "group",
-    "subgroup": "subgroup",
-    "codepoints": "codepoints",
-    "status": "status",
-    "emoji": "emoji",
-    "name": "name",
-    "keywords": ["key", "words"]
+    "group": "Flags",
+    "subgroup": "flag",
+    "codepoints": [0x1F3F4, 0x200D, 0x2620, 0xFE0F],
+    "status": "fully-qualified",
+    "emoji": "🏴‍☠️",
+    "name": "pirate flag",
+    "keywords": ["flags", "flag", "pirate"]
   }
 ]
