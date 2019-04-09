@@ -1,0 +1,11 @@
+[
+  {
+    "group": "group",
+    "subgroup": "subgroup",
+    "codepoints": "codepoints",
+    "status": "status",
+    "emoji": "emoji",
+    "name": "name",
+    "keywords": ["key", "words"]
+  }
+]
