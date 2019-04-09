@@ -4,10 +4,11 @@
 
 `Emoji Version:` `12.0`
 
-## Usage:
+## How to use:
 
 ```bash
-npm build json
+npm link
+emojidb build json
 ```
 
 ## 附：
