@@ -1,0 +1,27 @@
+{
+  "name": "emojidb",
+  "version": "1.0.0",
+  "description": "emoji database",
+  "bin": {
+    "emojidb": "emojidb"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dofy/emojidb.git"
+  },
+  "keywords": [
+    "emoji",
+    "database",
+    "unicode"
+  ],
+  "author": "Seven Yu <dofyyu@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dofy/emojidb/issues"
+  },
+  "homepage": "https://github.com/dofy/emojidb#readme",
+  "dependencies": {
+    "shelljs": "^0.8.3",
+    "yargs": "^13.2.2"
+  }
+}
