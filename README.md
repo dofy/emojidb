@@ -7,7 +7,11 @@
 ## How to use:
 
 ```bash
+# init
+npm install
 npm link
+
+# run
 emojidb build json
 ```
 
