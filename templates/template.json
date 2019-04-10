@@ -4,11 +4,11 @@
     {
       "group": "Flags",
       "subgroup": "flag",
-      "codepoints": ["1F3F4", "200D", "2620", "FE0F"],
+      "codepoints": "1F3F4,200D,2620,FE0F",
       "status": "fully-qualified",
       "emoji": "🏴‍☠️",
       "name": "pirate flag",
-      "keywords": ["flags", "flag", "pirate"]
+      "keywords": "flags,flag,pirate"
     }
   ]
 }
