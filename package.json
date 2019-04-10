@@ -22,6 +22,7 @@
   "homepage": "https://github.com/dofy/emojidb#readme",
   "dependencies": {
     "shelljs": "^0.8.3",
+    "xml2js": "^0.4.19",
     "yargs": "^13.2.2"
   }
 }
