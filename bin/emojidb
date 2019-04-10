@@ -4,9 +4,10 @@ const emojiVersion = '12.0';
 
 const fs = require('fs');
 const path = require('path');
-const shell = require("shelljs");
 const readline = require('readline');
+
 const xml2js = require('xml2js');
+const json2csv = require('json2csv');
 
 const argv = require('yargs')
   .help('h')
@@ -50,7 +51,8 @@ stream.on('close', _ => {
       fileContent = builder.buildObject(data);
       break;
     case 'csv':
-      fileContent = 'TODO: csv';
+      let parser = new json2csv.Parser();
+      fileContent = parser.parse(data.emojis);
       break;
     case 'json':
     default:
