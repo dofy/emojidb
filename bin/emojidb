@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const shell = require("shelljs");
 const readline = require('readline');
+const xml2js = require('xml2js');
 
 const argv = require('yargs')
   .help('h')
@@ -13,7 +14,7 @@ const argv = require('yargs')
   .alias('h', 'help')
   .option('f', {
     alias: 'file',
-    default: 'result',
+    default: 'emojidb_result',
     describe: 'File name'
   })
   .option('t', {
@@ -23,31 +24,42 @@ const argv = require('yargs')
     choices: ['json', 'xml', 'cvs']
   })
   .usage('Usage: emojidb [-t type] [-f file]')
-  .example('emojidb -t xml -f yahaha')
-  .example('# You will get a file named "yahaha.xml" in "output" folder.')
+  .example('emojidb -t xml -f ~/yahaha')
+  .example('# You will get a file named "yahaha.xml" in user folder.')
   .epilog('copyright (C) 2019 phpz.xyz')
   .argv;
 
-console.log(argv);
-
 const source = path.join(__dirname, '../source/emoji-test.txt');
-const output = path.join(__dirname, '../output/', `${argv.file}.${argv.type}`);
+const output = `${argv.file}.${argv.type}`;
 const stream = fs.createReadStream(source);
 const rl = readline.createInterface({input: stream});
 
+let data = { version: emojiVersion, emojis: [] };
+
 stream.on('open', _ => {
-  console.log('BEGIN!');
+  // console.log('BEGIN!');
 });
 
 stream.on('close', _ => {
-  console.log('DONE!');
+  console.log(`DONE! Please run \`open "${output}"\` to check the output.`);
+
+  switch (argv.type) {
+    case 'xml':
+      let builder = new xml2js.Builder();
+      let xml = builder.buildObject(data);
+      fs.writeFileSync(output, xml);
+      break;
+    case 'csv':
+      break;
+    case 'json':
+    default:
+      fs.writeFileSync(output, JSON.stringify(data, null, 2));
+      break;
+  }
 });
 
 let curGroup = null;
 let curSubgroup = null;
-
-console.log(source, output);
-let file = fs.createWriteStream(output);
 
 rl.on('line', line => {
   if (line.charAt(0) == '#') {
@@ -55,26 +67,32 @@ rl.on('line', line => {
     let subgroup = /#\s+subgroup:\s+(.+)/.exec(line);
     // group
     if (group) {
-      console.log('- group', group[1]);
+      // console.log('- group', group[1]);
       curGroup = group[1];
     }
     // subgroup
     if (subgroup) {
-      console.log('-- subgroup', subgroup[1]);
+      // console.log('-- subgroup', subgroup[1]);
       curSubgroup = subgroup[1];
     }
   } else {
     // emoji
     // # Format: code points; status # emoji name
     //           [1]          [2]      [3]   [4]
-    let emojiInfo = /^([\w\s]+)\s+;\s+([\w\-]+)\s+\#\s+(\S+)\s+(.+)/.exec(line);
-    emojiInfo && console.log(getKeyWords(curGroup, curSubgroup, emojiInfo[4]));
+    let emojiInfo = /^([\w\s]+?)\s+;\s+([\w\-]+)\s+\#\s+(\S+)\s+(.+)/.exec(line);
+    // emojiInfo && console.log(getKeyWords(curGroup, curSubgroup, emojiInfo[4]));
+    emojiInfo && data.emojis.push({
+      group: curGroup,
+      subgroup: curSubgroup,
+      // codepoints: emojiInfo[1].split(/\s/).map(value => parseInt(value, 16)),
+      // codepoints: emojiInfo[1].split(/\s/),
+      codepoints: emojiInfo[1].replace(/\s+/g, ','),
+      status: emojiInfo[2],
+      emoji: emojiInfo[3],
+      name: emojiInfo[4],
+      keywords: getKeyWords(curGroup, curSubgroup, emojiInfo[4])
+    });
   }
-
-  /* # group: Group
-   * # subgroup: subgroup
-   * code points; status # emoji name
-   */
 });
 
 function getKeyWords(group, subgroup, name) {
@@ -83,10 +101,11 @@ function getKeyWords(group, subgroup, name) {
 
   name = name.replace(/[\(\)]/g, '');
 
-  console.log(group, subgroup, name);
+  // console.log(group, subgroup, name);
   keywords = keywords.concat(group.toLowerCase().split(separator));
   keywords = keywords.concat(subgroup.toLowerCase().split(separator));
   keywords = keywords.concat(name.toLowerCase().split(separator));
 
-  return Array.from(new Set(keywords));
+  // return Array.from(new Set(keywords));
+  return Array.from(new Set(keywords)).join();
 }
