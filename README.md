@@ -1,6 +1,6 @@
 # Emoji Database
 
-最全 Emoji 数据，中英文名称。
+生成多种格式 Emoji 数据
 
 `Emoji Version:` `12.0`
 
@@ -12,7 +12,10 @@ npm install
 npm link
 
 # run
-emojidb build json
+emojidb -t json -f yahaha
+
+# help
+emojidb -h
 ```
 
 ## 附：
