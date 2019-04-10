@@ -21,7 +21,7 @@ const argv = require('yargs')
     alias: 'type',
     default: 'json',
     describe: 'Output format',
-    choices: ['json', 'xml', 'cvs']
+    choices: ['json', 'xml', 'csv']
   })
   .usage('Usage: emojidb [-t type] [-f file]')
   .example('emojidb -t xml -f ~/yahaha')
@@ -41,21 +41,31 @@ stream.on('open', _ => {
 });
 
 stream.on('close', _ => {
-  console.log(`DONE! Please run \`open "${output}"\` to check the output.`);
+
+  let fileContent = null;
 
   switch (argv.type) {
     case 'xml':
       let builder = new xml2js.Builder();
-      let xml = builder.buildObject(data);
-      fs.writeFileSync(output, xml);
+      fileContent = builder.buildObject(data);
       break;
     case 'csv':
+      fileContent = 'TODO: csv';
       break;
     case 'json':
     default:
-      fs.writeFileSync(output, JSON.stringify(data, null, 2));
+      fileContent = JSON.stringify(data, null, 2);
       break;
   }
+
+  fs.writeFile(output, fileContent, err => {
+    if (err) {
+      console.error("⚠️ ", err.message);
+    } else {
+      console.log(`✌️  Please run \`open "${output}"\` to check the output.`);
+    }
+  });
+
 });
 
 let curGroup = null;
