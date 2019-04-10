@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const emojiVersion = '12.0';
+
 const fs = require('fs');
 const path = require('path');
 const shell = require("shelljs");
@@ -21,12 +23,15 @@ const argv = require('yargs')
     choices: ['json', 'xml', 'cvs']
   })
   .usage('Usage: emojidb [-t type] [-f file]')
+  .example('emojidb -t xml -f yahaha')
+  .example('# You will get a file named "yahaha.xml" in "output" folder.')
   .epilog('copyright (C) 2019 phpz.xyz')
   .argv;
 
 console.log(argv);
 
 const source = path.join(__dirname, '../source/emoji-test.txt');
+const output = path.join(__dirname, '../output/', `${argv.file}.${argv.type}`);
 const stream = fs.createReadStream(source);
 const rl = readline.createInterface({input: stream});
 
@@ -38,17 +43,50 @@ stream.on('close', _ => {
   console.log('DONE!');
 });
 
-rl.on('line', line => {
-  // console.log(line);
+let curGroup = null;
+let curSubgroup = null;
 
-  // check group
-  //
-  // check subgroup
-  //
-  // check emoji
+console.log(source, output);
+let file = fs.createWriteStream(output);
+
+rl.on('line', line => {
+  if (line.charAt(0) == '#') {
+    let group = /#\s+group:\s+(.+)/.exec(line);
+    let subgroup = /#\s+subgroup:\s+(.+)/.exec(line);
+    // group
+    if (group) {
+      console.log('- group', group[1]);
+      curGroup = group[1];
+    }
+    // subgroup
+    if (subgroup) {
+      console.log('-- subgroup', subgroup[1]);
+      curSubgroup = subgroup[1];
+    }
+  } else {
+    // emoji
+    // # Format: code points; status # emoji name
+    //           [1]          [2]      [3]   [4]
+    let emojiInfo = /^([\w\s]+)\s+;\s+([\w\-]+)\s+\#\s+(\S+)\s+(.+)/.exec(line);
+    emojiInfo && console.log(getKeyWords(curGroup, curSubgroup, emojiInfo[4]));
+  }
 
   /* # group: Group
    * # subgroup: subgroup
    * code points; status # emoji name
    */
 });
+
+function getKeyWords(group, subgroup, name) {
+  const separator = /[\s\&\-]+/;
+  let keywords = [];
+
+  name = name.replace(/[\(\)]/g, '');
+
+  console.log(group, subgroup, name);
+  keywords = keywords.concat(group.toLowerCase().split(separator));
+  keywords = keywords.concat(subgroup.toLowerCase().split(separator));
+  keywords = keywords.concat(name.toLowerCase().split(separator));
+
+  return Array.from(new Set(keywords));
+}
