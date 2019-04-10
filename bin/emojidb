@@ -79,25 +79,22 @@ rl.on('line', line => {
     let subgroup = /#\s+subgroup:\s+(.+)/.exec(line);
     // group
     if (group) {
-      // console.log('- group', group[1]);
       curGroup = group[1];
     }
     // subgroup
     if (subgroup) {
-      // console.log('-- subgroup', subgroup[1]);
       curSubgroup = subgroup[1];
     }
   } else {
     // emoji
     // # Format: code points; status # emoji name
     //           [1]          [2]      [3]   [4]
+
     let emojiInfo = /^([\w\s]+?)\s+;\s+([\w\-]+)\s+\#\s+(\S+)\s+(.+)/.exec(line);
-    // emojiInfo && console.log(getKeyWords(curGroup, curSubgroup, emojiInfo[4]));
+
     emojiInfo && data.emojis.push({
       group: curGroup,
       subgroup: curSubgroup,
-      // codepoints: emojiInfo[1].split(/\s/).map(value => parseInt(value, 16)),
-      // codepoints: emojiInfo[1].split(/\s/),
       codepoints: emojiInfo[1].replace(/\s+/g, ','),
       status: emojiInfo[2],
       emoji: emojiInfo[3],
@@ -113,11 +110,9 @@ function getKeyWords(group, subgroup, name) {
 
   name = name.replace(/[\(\)]/g, '');
 
-  // console.log(group, subgroup, name);
   keywords = keywords.concat(group.toLowerCase().split(separator));
   keywords = keywords.concat(subgroup.toLowerCase().split(separator));
   keywords = keywords.concat(name.toLowerCase().split(separator));
 
-  // return Array.from(new Set(keywords));
   return Array.from(new Set(keywords)).join();
 }
