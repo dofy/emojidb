@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
+const path = require('path');
 const shell = require("shelljs");
+const readline = require('readline');
+
 const argv = require('yargs')
   .help('h')
   .alias('v', 'version')
@@ -14,6 +18,23 @@ const argv = require('yargs')
   .epilog('copyright (C) 2019 phpz.xyz')
   .argv;
 
-console.log(argv.name)
+const source = path.join(__dirname, '../source/emoji-test.txt');
+const stream = fs.createReadStream(source);
+const rl = readline.createInterface({input: stream});
 
-console.log(argv);
+stream.on('open', data => {
+  console.log('BEGIN!');
+});
+
+stream.on('close', data => {
+  console.log('DONE!');
+});
+
+rl.on('line', line => {
+  // console.log(line);
+
+  /* # group: Group
+   * # subgroup: subgroup
+   * code points; status # emoji name
+   */
+});
