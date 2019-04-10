@@ -9,29 +9,43 @@ const argv = require('yargs')
   .help('h')
   .alias('v', 'version')
   .alias('h', 'help')
-  .alias('f', 'file')
-  .describe('f', 'File name')
-  .alias('t', 'type')
-  .describe('t', 'Choice output format')
-  .choices('t', ['json', 'xml'])
-  .usage('Usage: emojidb -t type -f file')
+  .option('f', {
+    alias: 'file',
+    default: 'result',
+    describe: 'File name'
+  })
+  .option('t', {
+    alias: 'type',
+    default: 'json',
+    describe: 'Output format',
+    choices: ['json', 'xml', 'cvs']
+  })
+  .usage('Usage: emojidb [-t type] [-f file]')
   .epilog('copyright (C) 2019 phpz.xyz')
   .argv;
+
+console.log(argv);
 
 const source = path.join(__dirname, '../source/emoji-test.txt');
 const stream = fs.createReadStream(source);
 const rl = readline.createInterface({input: stream});
 
-stream.on('open', data => {
+stream.on('open', _ => {
   console.log('BEGIN!');
 });
 
-stream.on('close', data => {
+stream.on('close', _ => {
   console.log('DONE!');
 });
 
 rl.on('line', line => {
   // console.log(line);
+
+  // check group
+  //
+  // check subgroup
+  //
+  // check emoji
 
   /* # group: Group
    * # subgroup: subgroup
