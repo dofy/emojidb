@@ -4,7 +4,7 @@
     {
       "group": "Flags",
       "subgroup": "flag",
-      "codepoints": [0x1F3F4, 0x200D, 0x2620, 0xFE0F],
+      "codepoints": ["1F3F4", "200D", "2620", "FE0F"],
       "status": "fully-qualified",
       "emoji": "🏴‍☠️",
       "name": "pirate flag",
