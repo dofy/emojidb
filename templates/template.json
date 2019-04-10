@@ -1,11 +1,14 @@
-[
-  {
-    "group": "Flags",
-    "subgroup": "flag",
-    "codepoints": [0x1F3F4, 0x200D, 0x2620, 0xFE0F],
-    "status": "fully-qualified",
-    "emoji": "🏴‍☠️",
-    "name": "pirate flag",
-    "keywords": ["flags", "flag", "pirate"]
-  }
-]
+{
+  "version": "12.0",
+  "emojis": [
+    {
+      "group": "Flags",
+      "subgroup": "flag",
+      "codepoints": [0x1F3F4, 0x200D, 0x2620, 0xFE0F],
+      "status": "fully-qualified",
+      "emoji": "🏴‍☠️",
+      "name": "pirate flag",
+      "keywords": ["flags", "flag", "pirate"]
+    }
+  ]
+}
