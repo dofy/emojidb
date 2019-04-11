@@ -6,13 +6,13 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
-const xml2js = require('xml2js');
-const json2csv = require('json2csv');
+const formators = require('../lib/formators');
+const arrFormators = Object.keys(formators);
 
 const argv = require('yargs')
   .help('h')
-  .alias('v', 'version')
   .alias('h', 'help')
+  .alias('v', 'version')
   .option('f', {
     alias: 'file',
     default: 'emojidb_result',
@@ -22,7 +22,7 @@ const argv = require('yargs')
     alias: 'type',
     default: 'json',
     describe: 'Output format',
-    choices: ['json', 'xml', 'csv']
+    choices: arrFormators
   })
   .usage('Usage: emojidb [-t type] [-f file]')
   .example('emojidb -t xml -f ~/yahaha')
@@ -42,32 +42,16 @@ stream.on('open', _ => {
 });
 
 stream.on('close', _ => {
-
-  let fileContent = null;
-
-  switch (argv.type) {
-    case 'xml':
-      let builder = new xml2js.Builder();
-      fileContent = builder.buildObject(data);
-      break;
-    case 'csv':
-      let parser = new json2csv.Parser();
-      fileContent = parser.parse(data.emojis);
-      break;
-    case 'json':
-    default:
-      fileContent = JSON.stringify(data, null, 2);
-      break;
-  }
-
-  fs.writeFile(output, fileContent, err => {
-    if (err) {
-      console.error("⚠️ ", err.message);
-    } else {
-      console.log(`✌️  Please run \`open "${output}"\` to check the output.`);
-    }
-  });
-
+  fs.writeFile(
+    output,
+    new formators[argv.type](data).output,
+    err => {
+      if (err) {
+        console.error("⚠️ ", err.message);
+      } else {
+        console.log(`✌️  Please run \`open "${output}"\` to check the output.`);
+      }
+    });
 });
 
 let curGroup = null;
