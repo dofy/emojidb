@@ -20,7 +20,7 @@ const argv = require('yargs')
   })
   .option('t', {
     alias: 'type',
-    default: 'json',
+    default: arrFormators[0],
     describe: 'Output format',
     choices: arrFormators
   })
