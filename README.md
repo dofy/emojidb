@@ -28,7 +28,7 @@ emojidb -h
 - 帮助内容与格式支持都会自动完成
 
 > _Tips:_ 
-
+>
 > `this._data` 结构参考 `./templates/template.json` 文件
 
 ## 附：
