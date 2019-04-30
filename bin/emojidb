@@ -47,6 +47,7 @@ const output = `${argv.file}.${argv.type}`;
 let rl = null;
 
 if (/^https?:\/\//.test(source)) {
+  console.log(`Loading... (${source})`);
   rl = readline.createInterface({
     input: request(source)
   });
