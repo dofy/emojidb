@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const emojiVersion = '12.0';
-
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
+const request = require('request');
 const readline = require('readline');
 
 const formators = require('../lib/formators');
@@ -24,43 +24,61 @@ const argv = require('yargs')
     describe: 'Output format',
     choices: arrFormators
   })
+  .option('s', {
+    alias: 'source',
+    default: 'DS',
+    describe: 'emoji-test.txt file or url'
+  })
   .usage('Usage: emojidb [-t type] [-f file]')
   .example('emojidb -t xml -f ~/yahaha')
   .example('# You will get a file named "yahaha.xml" in user folder.')
+  .example('')
+  .example('emojidb -s https://www.unicode.org/Public/emoji/11.0/emoji-test.txt')
+  .example('# This command will use the remote url like database source')
   .epilog('copyright (C) 2019 phpz.xyz')
   .argv;
 
-const source = path.join(__dirname, '../source/emoji-test.txt');
+const emojiVersion = '12.0';
+const defaultSource = '../source/emoji-test.txt';
+
+const source = argv.s === 'DS' ? path.join(__dirname, defaultSource) : argv.s;
 const output = `${argv.file}.${argv.type}`;
-const stream = fs.createReadStream(source);
-const rl = readline.createInterface({input: stream});
+
+let rl = null;
+
+if (/^https?:\/\//.test(source)) {
+  rl = readline.createInterface({
+    input: request(source)
+  });
+} else {
+  const stream = fs.createReadStream(source);
+  rl = readline.createInterface({input: stream});
+
+  stream.on('error', err => {
+    console.error(err.message);
+  });
+
+  stream.on('open', _ => {
+    // console.log('BEGIN!');
+  });
+
+}
+
 
 let data = { version: emojiVersion, emojis: [] };
-
-stream.on('open', _ => {
-  // console.log('BEGIN!');
-});
-
-stream.on('close', _ => {
-  fs.writeFile(
-    output,
-    new formators[argv.type](data).output,
-    err => {
-      if (err) {
-        console.error("⚠️ ", err.message);
-      } else {
-        console.log(`✌️  Please run \`open "${output}"\` to check the output.`);
-      }
-    });
-});
 
 let curGroup = null;
 let curSubgroup = null;
 
 rl.on('line', line => {
   if (line.charAt(0) == '#') {
+    let version = /#\s+version:\s+(.+)/i.exec(line);
     let group = /#\s+group:\s+(.+)/.exec(line);
     let subgroup = /#\s+subgroup:\s+(.+)/.exec(line);
+    // version
+    if (version) {
+      data.version = version[1];
+    }
     // group
     if (group) {
       curGroup = group[1];
@@ -86,6 +104,19 @@ rl.on('line', line => {
       keywords: getKeyWords(curGroup, curSubgroup, emojiInfo[4])
     });
   }
+});
+
+rl.on('close', _ => {
+  fs.writeFile(
+    output,
+    new formators[argv.type](data).output,
+    err => {
+      if (err) {
+        console.error("⚠️ ", err.message);
+      } else {
+        console.log(`✌️  Please run \`open "${output}"\` to check the output.`);
+      }
+    });
 });
 
 function getKeyWords(group, subgroup, name) {
