@@ -121,7 +121,7 @@ rl.on('close', _ => {
 });
 
 function getKeyWords(group, subgroup, name) {
-  const separator = /[\s\&\-]+/;
+  const separator = /[\s\&\-\:]+/;
   let keywords = [];
 
   name = name.replace(/[\(\)]/g, '');
