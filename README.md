@@ -34,4 +34,4 @@ emojidb -h
 ## 附：
 
 - 数据来源： https://www.unicode.org/Public/emoji
-- 数据文件： https://www.unicode.org/Public/emoji/13.0/emoji-test.txt
+- 数据文件： https://www.unicode.org/Public/emoji/13.1/emoji-test.txt
