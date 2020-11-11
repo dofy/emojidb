@@ -7,9 +7,17 @@
 ## How to use:
 
 ```bash
+# - CLONE PROJECT
 # init
 npm install
 npm link
+
+# OR
+
+# - INSTALL NPM
+npm install -g @dofy/emojidb
+# or
+yarn global add @dofy/emojidb
 
 # run
 emojidb -t json -f yahaha
