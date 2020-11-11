@@ -2,7 +2,7 @@
 
 生成多种格式 Emoji 数据
 
-`Emoji Version:` `13.0`
+`Emoji Version:` `13.1`
 
 ## How to use:
 

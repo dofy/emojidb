@@ -1,5 +1,5 @@
 {
-  "name": "emojidb",
+  "name": "@dofy/emojidb",
   "version": "1.2.0",
   "description": "emoji database",
   "bin": {
