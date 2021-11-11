@@ -2,7 +2,7 @@
 
 生成多种格式 Emoji 数据
 
-`Emoji Version:` `13.1`
+`Emoji Version:` `14.0`
 
 ## How to use:
 
@@ -42,4 +42,4 @@ emojidb -h
 ## 附：
 
 - 数据来源： https://www.unicode.org/Public/emoji
-- 数据文件： https://www.unicode.org/Public/emoji/13.1/emoji-test.txt
+- 数据文件： https://www.unicode.org/Public/emoji/14.0/emoji-test.txt
