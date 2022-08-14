@@ -33,12 +33,12 @@ const argv = require('yargs')
   .example('# You will get a file named "yahaha.xml" in user folder.')
   .example('')
   .example(
-    'emojidb -s https://www.unicode.org/Public/emoji/14.0/emoji-test.txt',
+    'emojidb -s https://www.unicode.org/Public/emoji/15.0/emoji-test.txt',
   )
   .example('# This command will use the remote url like database source')
-  .epilog('copyright (C) 2019-2021 phpz.xyz').argv;
+  .epilog('copyright (C) 2019-2022 phpz.xyz').argv;
 
-const emojiVersion = '14.0';
+const emojiVersion = '15.0';
 const defaultSource = '../source/emoji-test.txt';
 
 const source = argv.s === 'DS' ? join(__dirname, defaultSource) : argv.s;

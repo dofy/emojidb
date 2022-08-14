@@ -1,6 +1,6 @@
 {
   "name": "@dofy/emojidb",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "emoji database",
   "bin": {
     "emojidb": "bin/emojidb"
@@ -22,10 +22,10 @@
   },
   "homepage": "https://github.com/dofy/emojidb#readme",
   "dependencies": {
-    "json2csv": "^5.0.4",
+    "json2csv": "^5.0.7",
     "request": "^2.88.2",
     "xml2js": "^0.4.23",
-    "yargs": "^16.1.0",
-    "yargs-parser": "^13.1.2"
+    "yargs": "^17.5.1",
+    "yargs-parser": "^21.1.1"
   }
 }
