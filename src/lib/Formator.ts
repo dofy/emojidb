@@ -6,18 +6,18 @@ import xml from './formators/dfXML'
 
 const types = ['demo', 'csv', 'json', 'sql', 'xml']
 
-const format = (data: DataType, type: string): string => {
+const format = async (data: DataType, type: string): Promise<string> => {
   switch (type) {
     case 'csv':
-      return csv(data)
+      return await csv(data)
     case 'json':
-      return json(data)
+      return await json(data)
     case 'sql':
-      return sql(data)
+      return await sql(data)
     case 'xml':
-      return xml(data)
+      return await xml(data)
     default:
-      return demo(data)
+      return await demo(data)
   }
 }
 

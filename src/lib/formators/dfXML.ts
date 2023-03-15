@@ -1,6 +1,6 @@
 import { Builder } from 'xml2js'
 
-const output = (data: DataType): string => {
+const output = async (data: DataType): Promise<string> => {
   const builder = new Builder()
   return builder.buildObject(data)
 }

@@ -1,4 +1,4 @@
-const output = (data: DataType): string => {
+const output = async (data: DataType): Promise<string> => {
   const sql = [
     'DROP TABLE IF EXISTS `emojidb`;',
     `CREATE TABLE \`emojidb\` (id integer PRIMARY KEY autoincrement,
