@@ -1,0 +1,13 @@
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+class DataFormator {
+  constructor (data) {
+    this.data = data
+  }
+
+  get output () {
+    return `OUR FORMATOR's OUTPUT`
+  }
+}
+exports.default = DataFormator
+// # sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGF0YUZvcm1hdG9yLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2xpYi9kYXRhRm9ybWF0b3IudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxNQUFNLFlBQVk7SUFHaEIsWUFBWSxJQUFjO1FBQ3hCLElBQUksQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDO0lBQ25CLENBQUM7SUFFRCxJQUFJLE1BQU07UUFDUixPQUFPLHVCQUF1QixDQUFDO0lBQ2pDLENBQUM7Q0FDRjtBQUVELGtCQUFlLFlBQVksQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImNsYXNzIERhdGFGb3JtYXRvciB7XG4gIGRhdGE6IERhdGFUeXBlO1xuXG4gIGNvbnN0cnVjdG9yKGRhdGE6IERhdGFUeXBlKSB7XG4gICAgdGhpcy5kYXRhID0gZGF0YTtcbiAgfVxuXG4gIGdldCBvdXRwdXQoKSB7XG4gICAgcmV0dXJuIGBPVVIgRk9STUFUT1IncyBPVVRQVVRgO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IERhdGFGb3JtYXRvcjtcbiJdfQ==

@@ -1,0 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const output = (data) => {
+    return 'this is a Formator Demo...';
+};
+exports.default = output;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGZERU1PLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2xpYi9mb3JtYXRvcnMvZGZERU1PLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsTUFBTSxNQUFNLEdBQUcsQ0FBQyxJQUFjLEVBQVUsRUFBRTtJQUN4QyxPQUFPLDRCQUE0QixDQUFBO0FBQ3JDLENBQUMsQ0FBQTtBQUVELGtCQUFlLE1BQU0sQ0FBQSIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IG91dHB1dCA9IChkYXRhOiBEYXRhVHlwZSk6IHN0cmluZyA9PiB7XG4gIHJldHVybiAndGhpcyBpcyBhIEZvcm1hdG9yIERlbW8uLi4nXG59XG5cbmV4cG9ydCBkZWZhdWx0IG91dHB1dFxuIl19
