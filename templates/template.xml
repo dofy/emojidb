@@ -1,0 +1,12 @@
+<root>
+  <version>12.0</version>
+  <emojis>
+    <group>Flags</group>
+    <subgroup>flag</subgroup>
+    <codepoints>1F3F4,200D,2620,FE0F</codepoints>
+    <status>fully-qualified</status>
+    <emoji>🏴‍☠️</emoji>
+    <name>pirate flag</name>
+    <keywords>flags,flag,pirate</keywords>
+  </emojis>
+</root>
