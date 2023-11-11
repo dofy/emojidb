@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 
-import { createReadStream, writeFile } from 'fs'
+import { createReadStream, writeFile, type ReadStream } from 'fs'
 import { createInterface } from 'readline'
 
 import { join } from 'path'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
 
-import { format, types } from './lib/Formator'
 import axios from 'axios'
+import { format, types, type DataType } from './lib/Formator'
 
 const parser = yargs(hideBin(process.argv))
+  .help('h')
+  .alias('h', 'help')
+  .alias('v', 'version')
   .option('type', {
     alias: 't',
     describe: 'Output format',
@@ -42,12 +45,12 @@ const defaultSource = '../source/emoji-test.txt'
 
 void (async () => {
   const argv = await parser.argv
+  console.log('......', argv)
   const source =
     argv.source === 'DS' ? join(__dirname, defaultSource) : argv.source
   const output = `${argv.file}.${argv.type}`
 
-  let rl = null
-  let stream = null
+  let stream: ReadStream
 
   if (/^https?:\/\//.test(source)) {
     console.log('🕖', `Loading... (${source})`)
@@ -60,7 +63,7 @@ void (async () => {
         }
       })
       .catch((err) => {
-        console.error('⚠️', err.message)
+        console.error('⚠️ ', err.message)
         process.exit(1)
       })
     stream = response.data
@@ -69,7 +72,7 @@ void (async () => {
   }
 
   stream.on('error', (err: Error) => {
-    console.error('⚠️', err.message)
+    console.error('⚠️ ', err.message)
     process.exit(1)
   })
 
@@ -77,7 +80,7 @@ void (async () => {
     // console.log('BEGIN!');
   })
 
-  rl = createInterface({ input: stream })
+  const rl = createInterface({ input: stream })
 
   const data: DataType = { version: emojiVersion, emojis: [] }
 
@@ -136,7 +139,7 @@ void (async () => {
         })
       })
       .catch((err) => {
-        console.error('⚠️', err.message)
+        console.error('⚠️ ', err.message)
       })
   })
 })()

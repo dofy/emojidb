@@ -1,8 +1,17 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const json_2_csv_1 = require("json-2-csv");
-const output = async (data) => {
-    return await (0, json_2_csv_1.json2csvAsync)(data.emojis);
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const node_1 = require("@json2csv/node");
+const output = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const parser = new node_1.AsyncParser();
+    return parser.parse(data.emojis).promise();
+});
 exports.default = output;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGZDU1YuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvbGliL2Zvcm1hdG9ycy9kZkNTVi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDJDQUEwQztBQUUxQyxNQUFNLE1BQU0sR0FBRyxLQUFLLEVBQUUsSUFBYyxFQUFtQixFQUFFO0lBQ3ZELE9BQU8sTUFBTSxJQUFBLDBCQUFhLEVBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxDQUFBO0FBQ3pDLENBQUMsQ0FBQTtBQUVELGtCQUFlLE1BQU0sQ0FBQSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IGpzb24yY3N2QXN5bmMgfSBmcm9tICdqc29uLTItY3N2J1xuXG5jb25zdCBvdXRwdXQgPSBhc3luYyAoZGF0YTogRGF0YVR5cGUpOiBQcm9taXNlPHN0cmluZz4gPT4ge1xuICByZXR1cm4gYXdhaXQganNvbjJjc3ZBc3luYyhkYXRhLmVtb2ppcylcbn1cblxuZXhwb3J0IGRlZmF1bHQgb3V0cHV0XG4iXX0=

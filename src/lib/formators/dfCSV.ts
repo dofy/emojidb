@@ -1,7 +1,10 @@
-import { json2csvAsync } from 'json-2-csv'
+import { AsyncParser } from '@json2csv/node'
+
+import { type DataType } from '../Formator'
 
 const output = async (data: DataType): Promise<string> => {
-  return await json2csvAsync(data.emojis)
+  const parser = new AsyncParser()
+  return parser.parse(data.emojis).promise()
 }
 
 export default output

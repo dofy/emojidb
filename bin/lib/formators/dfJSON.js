@@ -1,7 +1,15 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const output = async (data) => {
-    return JSON.stringify(data, null, 2);
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const output = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    return JSON.stringify(data, null, 2);
+});
 exports.default = output;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGZKU09OLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2xpYi9mb3JtYXRvcnMvZGZKU09OLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsTUFBTSxNQUFNLEdBQUcsS0FBSyxFQUFFLElBQWMsRUFBbUIsRUFBRTtJQUN2RCxPQUFPLElBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxFQUFFLElBQUksRUFBRSxDQUFDLENBQUMsQ0FBQTtBQUN0QyxDQUFDLENBQUE7QUFFRCxrQkFBZSxNQUFNLENBQUEiLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBvdXRwdXQgPSBhc3luYyAoZGF0YTogRGF0YVR5cGUpOiBQcm9taXNlPHN0cmluZz4gPT4ge1xuICByZXR1cm4gSlNPTi5zdHJpbmdpZnkoZGF0YSwgbnVsbCwgMilcbn1cblxuZXhwb3J0IGRlZmF1bHQgb3V0cHV0XG4iXX0=
