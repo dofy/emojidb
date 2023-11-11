@@ -1,6 +1,6 @@
 {
   "name": "@dofy/emojidb",
-  "version": "1.4.6",
+  "version": "1.4.8",
   "description": "emoji database cli",
   "bin": {
     "emojidb": "./bin/index.js"
