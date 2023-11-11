@@ -3,7 +3,6 @@
 import { createReadStream, writeFile, type ReadStream } from 'fs'
 import { createInterface } from 'readline'
 
-import { join } from 'path'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
 
@@ -28,7 +27,7 @@ const parser = yargs(hideBin(process.argv))
   .option('source', {
     alias: 's',
     describe: 'emoji-test.txt file or url',
-    default: 'DS'
+    default: 'https://www.unicode.org/Public/emoji/latest/emoji-test.txt'
   })
   .example(
     'emojidb -t xml -f ~/yahaha',
@@ -40,13 +39,9 @@ const parser = yargs(hideBin(process.argv))
   )
   .epilog('copyright (C) 2019-2023 phpz.xyz')
 
-const emojiVersion = '15.0'
-const defaultSource = '../source/emoji-test.txt'
-
 void (async () => {
   const argv = await parser.argv
-  const source =
-    argv.source === 'DS' ? join(__dirname, defaultSource) : argv.source
+  const source = argv.source
   const output = `${argv.file}.${argv.type}`
 
   let stream: ReadStream
@@ -81,7 +76,7 @@ void (async () => {
 
   const rl = createInterface({ input: stream })
 
-  const data: DataType = { version: emojiVersion, emojis: [] }
+  const data: DataType = { version: 'unknow', emojis: [] }
 
   let curGroup = ''
   let curSubgroup = ''

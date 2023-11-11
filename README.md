@@ -2,8 +2,6 @@
 
 生成多种格式 Emoji 数据
 
-`Emoji Version:` `15.0`
-
 ## How to use:
 
 ```bash
@@ -35,11 +33,10 @@ emojidb --help
   - 將新格式加入 `types` 數組中
 - 帮助内容与格式支持都会自动完成
 
-> _Tips:_ 
+> _Tips:_
 >
 > `data` 结构参考 `./templates/template.json` 文件
 
 ## 附：
 
 - 数据来源： https://www.unicode.org/Public/emoji
-- 数据文件： https://www.unicode.org/Public/emoji/15.0/emoji-test.txt
