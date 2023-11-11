@@ -45,7 +45,6 @@ const defaultSource = '../source/emoji-test.txt'
 
 void (async () => {
   const argv = await parser.argv
-  console.log('......', argv)
   const source =
     argv.source === 'DS' ? join(__dirname, defaultSource) : argv.source
   const output = `${argv.file}.${argv.type}`
