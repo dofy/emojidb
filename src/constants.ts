@@ -1,0 +1,19 @@
+export const IGNORE_KEYWORDS = [
+  /^e[0-9.]+$/,
+  /^big$/,
+  /^with$/,
+  /^over$/,
+  /^for$/,
+  /^of$/,
+  /^in$/,
+  /^on$/,
+  /^to$/,
+  /^and$/,
+  /^the$/,
+  /^a$/,
+  /^an$/,
+  /^is$/,
+  /^are$/,
+  /^other$/,
+  /^objects?$/
+]

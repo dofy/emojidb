@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
+import axios from 'axios'
 import { createReadStream, writeFile, type ReadStream } from 'fs'
 import { createInterface } from 'readline'
-
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
-
-import axios from 'axios'
+import { IGNORE_KEYWORDS } from './constants'
 import { format, types, type DataType } from './lib/Formator'
 
 const parser = yargs(hideBin(process.argv))
@@ -37,7 +36,7 @@ const parser = yargs(hideBin(process.argv))
     'emojidb -s https://www.unicode.org/Public/emoji/15.0/emoji-test.txt',
     'This command will use the remote url like database source'
   )
-  .epilog('copyright (C) 2019-2023 phpz.xyz')
+  .epilog('copyright (C) 2019-2024 phpz.xyz')
 
 void (async () => {
   const argv = await parser.argv
@@ -139,14 +138,15 @@ void (async () => {
 })()
 
 const getKeyWords = (group: string, subgroup: string, name: string): string => {
-  const separator = /[\s&\-:]+/
+  const separator = /[\s&\-:,]+|’s\s*/
   let keywords: string[] = []
 
   name = name.replace(/[()]/g, '')
-
   keywords = keywords.concat(group.toLowerCase().split(separator))
   keywords = keywords.concat(subgroup.toLowerCase().split(separator))
   keywords = keywords.concat(name.toLowerCase().split(separator))
 
-  return Array.from(new Set(keywords)).join()
+  return Array.from(new Set(keywords))
+    .filter((keyword) => !IGNORE_KEYWORDS.some((re) => re.test(keyword)))
+    .join()
 }
