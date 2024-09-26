@@ -1,14 +1,14 @@
 {
   "name": "@dofy/emojidb",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "emoji database cli",
+  "type": "module",
   "bin": {
     "emojidb": "bin/index.js"
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./bin/index.js",
-    "lint": "eslint './src/*.{js,ts}' --fix"
+    "start": "node ./bin/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,10 @@
     "unicode",
     "cli"
   ],
-  "author": "Seven Yu <dofyyu@gmail.com>",
+  "author": {
+    "name": " Seven Yu",
+    "email": "dofyyu@gmail.com"
+  },
   "bugs": {
     "url": "https://github.com/dofy/emojidb/issues"
   },
@@ -30,11 +33,6 @@
     "@types/node": "^20.9.0",
     "@types/xml2js": "^0.4.14",
     "@types/yargs": "^17.0.31",
-    "@typescript-eslint/eslint-plugin": "^8.7.0",
-    "@typescript-eslint/parser": "^8.7.0",
-    "eslint": "^9.11.1",
-    "eslint-plugin-n": "^17.10.3",
-    "eslint-plugin-promise": "^7.1.0",
     "typescript": "5.2.2"
   },
   "dependencies": {
