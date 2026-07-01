@@ -1,8 +1,8 @@
-import csv from './formators/dfCSV'
-import demo from './formators/dfDEMO'
-import json from './formators/dfJSON'
-import sql from './formators/dfSQL'
-import xml from './formators/dfXML'
+import csv from './formators/dfCSV.js'
+import demo from './formators/dfDEMO.js'
+import json from './formators/dfJSON.js'
+import sql from './formators/dfSQL.js'
+import xml from './formators/dfXML.js'
 
 interface Emoji {
   group: string

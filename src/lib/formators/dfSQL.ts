@@ -1,4 +1,4 @@
-import { type DataType, type Emoji } from '../Formator'
+import { type DataType, type Emoji } from '../Formator.js'
 
 const output = async (data: DataType): Promise<string> => {
   const sql = [

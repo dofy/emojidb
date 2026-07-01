@@ -1,4 +1,4 @@
-import { type DataType } from '../Formator'
+import { type DataType } from '../Formator.js'
 
 const output = async (_data: DataType): Promise<string> => {
   if (Math.random() > 0.5) throw new Error('Demo Random Error!')

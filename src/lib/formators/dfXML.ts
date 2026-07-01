@@ -1,5 +1,5 @@
 import { Builder } from 'xml2js'
-import { type DataType } from '../Formator'
+import { type DataType } from '../Formator.js'
 
 const output = async (data: DataType): Promise<string> => {
   const builder = new Builder()

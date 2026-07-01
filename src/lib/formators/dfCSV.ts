@@ -1,6 +1,6 @@
 import { AsyncParser } from '@json2csv/node'
 
-import { type DataType } from '../Formator'
+import { type DataType } from '../Formator.js'
 
 const output = async (data: DataType): Promise<string> => {
   const parser = new AsyncParser()

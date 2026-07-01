@@ -1,4 +1,4 @@
-import { type DataType } from '../Formator'
+import { type DataType } from '../Formator.js'
 
 const output = async (data: DataType): Promise<string> => {
   return JSON.stringify(data, null, 2)

@@ -5,8 +5,8 @@ import { createReadStream, writeFile, type ReadStream } from 'fs'
 import { createInterface } from 'readline'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
-import { IGNORE_KEYWORDS } from './constants'
-import { format, types, type DataType } from './lib/Formator'
+import { IGNORE_KEYWORDS } from './constants.js'
+import { format, types, type DataType } from './lib/Formator.js'
 
 const parser = yargs(hideBin(process.argv))
   .help('h')
