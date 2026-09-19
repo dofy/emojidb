@@ -1,5 +1,5 @@
 {
-  "version": "12.0",
+  "version": "18.0",
   "emojis": [
     {
       "group": "Flags",
@@ -7,7 +7,7 @@
       "codepoints": "1F3F4,200D,2620,FE0F",
       "status": "fully-qualified",
       "emoji": "🏴‍☠️",
-      "name": "pirate flag",
+      "name": "E11.0 pirate flag",
       "keywords": "flags,flag,pirate"
     }
   ]

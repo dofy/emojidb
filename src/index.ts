@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-import axios from 'axios'
-import { createReadStream, writeFile, type ReadStream } from 'fs'
-import { createInterface } from 'readline'
+import { readFile, writeFile } from 'fs/promises'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
 import { IGNORE_KEYWORDS } from './constants.js'
 import { format, types, type DataType } from './lib/Formator.js'
+
+const USER_AGENT =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
 
 const parser = yargs(hideBin(process.argv))
   .help('h')
@@ -33,54 +34,65 @@ const parser = yargs(hideBin(process.argv))
     'This command will output xml file which named "yahaha.xml" in user folder.'
   )
   .example(
-    'emojidb -s https://www.unicode.org/Public/emoji/15.0/emoji-test.txt',
+    'emojidb -s https://www.unicode.org/Public/emoji/16.0/emoji-test.txt',
     'This command will use the remote url like database source'
   )
-  .epilog('copyright (C) 2019-2024 phpz.xyz')
+  .epilog('copyright (C) 2019-2026 phpz.xyz')
 
-void (async () => {
-  const argv = await parser.argv
-  const source = argv.source
-  const output = `${argv.file}.${argv.type}`
+// The variable needs the explicit annotation, not just the arrow's return type:
+// TS only uses a never-returning call for control flow narrowing when the
+// declaration itself is annotated.
+const fail: (message: string) => never = (message) => {
+  console.error('⚠️ ', message)
+  process.exit(1)
+}
 
-  let stream: ReadStream
+const getKeyWords = (group: string, subgroup: string, name: string): string => {
+  const separator = /[\s&\-:,]+|’s\s*/
+  let keywords: string[] = []
 
-  if (/^https?:\/\//.test(source)) {
-    console.log('🕖', `Loading... (${source})`)
-    const response = await axios
-      .get(source, {
-        responseType: 'stream',
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
-        }
-      })
-      .catch((err) => {
-        console.error('⚠️ ', err.message)
-        process.exit(1)
-      })
-    stream = response.data
-  } else {
-    stream = createReadStream(source)
+  name = name.replace(/[()]/g, '')
+  keywords = keywords.concat(group.toLowerCase().split(separator))
+  keywords = keywords.concat(subgroup.toLowerCase().split(separator))
+  keywords = keywords.concat(name.toLowerCase().split(separator))
+
+  return Array.from(new Set(keywords))
+    .filter((keyword) => !IGNORE_KEYWORDS.some((re) => re.test(keyword)))
+    .join()
+}
+
+// emoji-test.txt is a single ~500KB document, so it is read whole rather than
+// streamed: no readline, no stream error plumbing, and no Readable.fromWeb type
+// mismatch between the DOM ReadableStream of fetch and node:stream/web.
+const load = async (source: string): Promise<string> => {
+  if (!/^https?:\/\//.test(source)) {
+    return await readFile(source, 'utf8').catch((err: Error) =>
+      fail(err.message)
+    )
   }
 
-  stream.on('error', (err: Error) => {
-    console.error('⚠️ ', err.message)
-    process.exit(1)
-  })
+  console.log('🕖', `Loading... (${source})`)
 
-  stream.on('open', () => {
-    // console.log('BEGIN!');
-  })
+  const response = await fetch(source, {
+    headers: { 'User-Agent': USER_AGENT }
+  }).catch((err: Error) => fail(err.message))
 
-  const rl = createInterface({ input: stream })
+  // A 4xx/5xx still resolves, so without this the error page would be parsed as
+  // emoji data and silently yield an empty result.
+  if (!response.ok) {
+    fail(`HTTP ${response.status} ${response.statusText} (${source})`)
+  }
 
-  const data: DataType = { version: 'unknow', emojis: [] }
+  return await response.text()
+}
+
+const parse = (text: string): DataType => {
+  const data: DataType = { version: 'unknown', emojis: [] }
 
   let curGroup = ''
   let curSubgroup = ''
 
-  rl.on('line', (line) => {
+  for (const line of text.split(/\r?\n/)) {
     if (line.charAt(0) === '#') {
       const version = /#\s+version:\s+(.+)/i.exec(line)
       const group = /#\s+group:\s+(.+)/.exec(line)
@@ -105,7 +117,7 @@ void (async () => {
         line
       )
 
-      emojiInfo != null &&
+      if (emojiInfo != null) {
         data.emojis.push({
           group: curGroup,
           subgroup: curSubgroup,
@@ -115,38 +127,24 @@ void (async () => {
           name: emojiInfo[4],
           keywords: getKeyWords(curGroup, curSubgroup, emojiInfo[4])
         })
+      }
     }
-  })
-  rl.on('close', () => {
-    format(data, argv.type)
-      .then((result) => {
-        writeFile(output, result, (err) => {
-          if (err != null) {
-            console.error('⚠️', err.message)
-          } else {
-            console.log(
-              '✌️',
-              `️Please run \`open "${output}"\` to check the output.`
-            )
-          }
-        })
-      })
-      .catch((err) => {
-        console.error('⚠️ ', err.message)
-      })
-  })
-})()
+  }
 
-const getKeyWords = (group: string, subgroup: string, name: string): string => {
-  const separator = /[\s&\-:,]+|’s\s*/
-  let keywords: string[] = []
-
-  name = name.replace(/[()]/g, '')
-  keywords = keywords.concat(group.toLowerCase().split(separator))
-  keywords = keywords.concat(subgroup.toLowerCase().split(separator))
-  keywords = keywords.concat(name.toLowerCase().split(separator))
-
-  return Array.from(new Set(keywords))
-    .filter((keyword) => !IGNORE_KEYWORDS.some((re) => re.test(keyword)))
-    .join()
+  return data
 }
+
+void (async () => {
+  const argv = await parser.argv
+  const output = `${argv.file}.${argv.type}`
+
+  const data = parse(await load(argv.source))
+
+  try {
+    await writeFile(output, await format(data, argv.type))
+  } catch (err) {
+    fail((err as Error).message)
+  }
+
+  console.log('✌️', `️Please run \`open "${output}"\` to check the output.`)
+})()

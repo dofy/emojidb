@@ -1,6 +1,6 @@
 {
   "name": "@dofy/emojidb",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "emoji database cli",
   "type": "module",
   "bin": {
@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./bin/index.js"
+    "start": "node ./bin/index.js",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -29,17 +30,23 @@
   },
   "homepage": "https://github.com/dofy/emojidb#readme",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "@types/node": "^26.0.1",
     "@types/xml2js": "^0.4.14",
     "@types/yargs": "^17.0.35",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "@json2csv/node": "^7.0.6",
-    "axios": "^1.18.1",
     "xml2js": "^0.6.2",
     "yargs": "^18.0.0",
     "yargs-parser": "^22.0.0"
-  }
+  },
+  "files": [
+    "bin",
+    "templates"
+  ]
 }
