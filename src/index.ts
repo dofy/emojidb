@@ -16,7 +16,7 @@ const parser = yargs(hideBin(process.argv))
   .option('type', {
     alias: 't',
     describe: 'Output format',
-    default: types[0],
+    default: 'json',
     choices: types
   })
   .option('file', {

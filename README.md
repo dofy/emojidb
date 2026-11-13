@@ -12,6 +12,9 @@ yarn global add @dofy/emojidb
 # run
 emojidb -t json -f yahaha
 
+# JSON is the default; CSV, SQL (SQLite) and XML are also available
+emojidb -s ./emoji-test.txt -t sql -f emoji
+
 # help
 emojidb --help
 ```
@@ -39,3 +42,4 @@ emojidb --help
   specific release with `-s https://www.unicode.org/Public/emoji/16.0/emoji-test.txt`,
   or pass a local file path to the same option.
 - Requires Node.js 18 or newer (uses the built-in `fetch`).
+- Run `yarn test` to build and exercise the CLI against a local fixture.

@@ -1,6 +1,7 @@
 import { type DataType, type Emoji } from '../Formator.js'
 
 const output = async (data: DataType): Promise<string> => {
+  const quote = (value: string): string => `'${value.replace(/'/g, "''")}'`
   const sql = [
     'DROP TABLE IF EXISTS `emojidb`;',
     `CREATE TABLE \`emojidb\` (id integer PRIMARY KEY autoincrement,
@@ -11,7 +12,7 @@ const output = async (data: DataType): Promise<string> => {
 
   data.emojis.forEach((item: Emoji) => {
     sql.push(
-      `INSERT INTO \`emojidb\` VALUES (null, '${item.group}', '${item.subgroup}', '${item.codepoints}', '${item.status}', '${item.emoji}', '${item.name}', '${item.keywords}');`
+      `INSERT INTO \`emojidb\` VALUES (null, ${[item.group, item.subgroup, item.codepoints, item.status, item.emoji, item.name, item.keywords].map(quote).join(', ')});`
     )
   })
 
